@@ -18,15 +18,15 @@ module Gr1d99Auth
 
     def encode(payload)
       payload[:exp] = config.jwt_exp unless config.jwt_exp.nil?
-      key = config.jwt_key
-      algorithm = config.jwt_algorithm
+      key           = config.jwt_key
+      algorithm     = config.jwt_algorithm
       ::JWT.encode(payload, key, algorithm)
     end
 
     def decode(token)
-      key = config.jwt_key
+      key    = config.jwt_key
       verify = config.jwt_verify
-      opts = { algorithm: config.jwt_algorithm }
+      opts   = { algorithm: config.jwt_algorithm }
       ::JWT.decode(token, key, verify, opts)
     end
   end

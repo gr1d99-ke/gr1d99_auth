@@ -8,10 +8,10 @@ describe Gr1d99Auth do
 
   before do
     described_class.configure do |config|
-      config.jwt_key = key
-      config.jwt_verify = verify
+      config.jwt_key       = key
+      config.jwt_verify    = verify
       config.jwt_algorithm = algorithm
-      config.jwt_exp = exp
+      config.jwt_exp       = exp
     end
   end
 
@@ -21,7 +21,7 @@ describe Gr1d99Auth do
 
   it "decodes jwt" do
     token = described_class::JWT.encode(payload)
-    data = described_class::JWT.decode(token)
+    data  = described_class::JWT.decode(token)
     payload = data[0]
 
     expect(payload["name"]).to match(/#{name}/)
@@ -29,10 +29,10 @@ describe Gr1d99Auth do
 
   it "raises JWT::ExpiredSignature when token is expired" do
     described_class.configure do |config|
-      config.jwt_key = key
-      config.jwt_verify
+      config.jwt_key       = key
+      config.jwt_verify    = verify
       config.jwt_algorithm = algorithm
-      config.jwt_exp = Time.now.to_i + 1
+      config.jwt_exp       = Time.now.to_i + 1
     end
 
     token = described_class::JWT.encode(payload)
@@ -44,10 +44,10 @@ describe Gr1d99Auth do
   it "raises JWT::VerificationError when invalid key is used" do
     token = described_class::JWT.encode(payload)
     described_class::configure do |config|
-      config.jwt_key = "456"
-      config.jwt_verify = verify
+      config.jwt_key       = "456"
+      config.jwt_verify    = verify
       config.jwt_algorithm = algorithm
-      config.jwt_exp = nil
+      config.jwt_exp       = nil
     end
 
     expect { described_class::JWT.decode(token) }.to raise_error(JWT::VerificationError)
@@ -56,10 +56,10 @@ describe Gr1d99Auth do
   it "raises JWT::IncorrectAlgorithm when algorithm is incorrect" do
     token = described_class::JWT.encode(payload)
     described_class.configure do |config|
-      config.jwt_key = key
-      config.jwt_verify = true
+      config.jwt_key       = key
+      config.jwt_verify    = true
       config.jwt_algorithm = 'HS256'
-      config.jwt_exp = nil
+      config.jwt_exp       = nil
     end
 
     expect { described_class::JWT.decode(token) }.to raise_error(JWT::IncorrectAlgorithm)
