@@ -12,6 +12,7 @@ describe Gr1d99Auth do
       config.jwt_verify    = verify
       config.jwt_algorithm = algorithm
       config.jwt_exp       = exp
+      config.time_zone     = "Africa/Nairobi"
     end
   end
 
@@ -32,7 +33,7 @@ describe Gr1d99Auth do
       config.jwt_key       = key
       config.jwt_verify    = verify
       config.jwt_algorithm = algorithm
-      config.jwt_exp       = Time.now.to_i + 1
+      config.jwt_exp       = 1
     end
 
     token = described_class::JWT.encode(payload)
