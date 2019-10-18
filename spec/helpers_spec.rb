@@ -47,4 +47,8 @@ describe Gr1d99Auth::Helpers do
       expect(current_user).to     be(user)
     end
   end
+
+  describe "helpers" do
+
+  end
 end
